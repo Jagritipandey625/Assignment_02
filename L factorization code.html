@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix to Lower Triangular Conversion</title>
+    <style>
+       .container1 {
+            background-color: rgb(192, 220, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .r {
+            color: rgb(255, 0, 81);
+        }
+
+        .matrix {
+            display: grid;
+            place-items: center;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 50%;
+        }
+        td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid rgb(105, 94, 94);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+        
+        button {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body bgcolor="lightblue">
+
+<h1>Matrix to Lower Triangular Matrix Conversion Step-by-Step</h1>
+
+<div>
+    <h3>Enter the matrix size (n x n):</h3>
+    <input type="number" id="matrix-size" class="matrix-size-input" placeholder="Enter n" min="2">
+    <button onclick="generateMatrix()">Generate Matrix</button>
+</div>
+
+<div>
+    <h3>Enter the matrix values:</h3>
+    <table id="matrix-input"></table>
+    <button onclick="convertToLowerTriangular()">Convert to Lower Triangular Matrix</button>
+</div>
+
+<div class="step">
+    <h3>Steps:</h3>
+    <pre id="steps"></pre>
+</div>
+
+<div>
+    <h3>Converted Lower Triangular Matrix:</h3>
+    <pre id="result"></pre>
+</div>
+<div class="container1">
+    <h1 class="r">Given Matrix</h1>
+    <table class="matrix">
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>3</td>
+                <td>1</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h1 class="r">Lower Triangular Matrix of the given matrix</h1>
+    <table class="matrix">
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>1</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>3</td>
+                <td>1</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
