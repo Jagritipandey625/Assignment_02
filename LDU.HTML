@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LDU Factorization</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="LDU.CSS">
+</head>
+<body>
+
+<h1>LDU Factorization</h1>
+
+<div>
+    <h3>Enter the matrix size (n x n):</h3>
+    <input type="number" id="matrix-size" min="2" placeholder="Enter n">
+    <button onclick="generateMatrix()">Generate Matrix</button>
+</div>
+
+<div id="matrix-container" style="display: none;">
+    <h3>Enter the matrix values:</h3>
+    <table id="matrix-input"></table>
+    <button onclick="calculateLDU()">Calculate LDU Factorization</button>
+</div>
+
+<div id="steps-container" style="display: none;">
+    <h3>Elimination Steps (E21, E31, E32):</h3>
+    <div id="steps"></div>
+</div>
+
+<div id="results-container" style="display: none;">
+    <h3>Results:</h3>
+    <div class="box result-box">
+        <h3>Lower Triangular Matrix (L):</h3>
+        <pre id="lower-matrix"></pre>
+    </div>
+
+    <div class="box result-box">
+        <h3>Upper Triangular Matrix (U):</h3>
+        <pre id="upper-matrix"></pre>
+    </div>
+
+    <div class="box result-box">
+        <h3>Diagonal Matrix (D):</h3>
+        <pre id="diagonal-matrix"></pre>
+    </div>
+</div>
+
+<!-- Link to the external JavaScript file -->
+<script src="LDU.JS"></script>
+</body>
+</html>
