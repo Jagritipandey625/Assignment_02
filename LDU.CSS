@@ -1,0 +1,30 @@
+body {
+    background-color: lightblue;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+table {
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+input {
+    width: 60px;
+    text-align: center;
+}
+button {
+    margin: 10px 0;
+}
+.box {
+    border: 2px solid black;
+    padding: 20px;
+    margin: 10px 0;
+    background-color: white;
+}
+.result-box {
+    background-color: #f9f9f9;
+}
