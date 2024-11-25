@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LDU Factorization</title>
+    <style>
+        body {
+            background-color: lightblue;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table {
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        input {
+            width: 60px;
+            text-align: center;
+        }
+        button {
+            margin: 10px 0;
+        }
+        .box {
+            border: 2px solid black;
+            padding: 20px;
+            margin: 10px 0;
+            background-color: white;
+        }
+        .result-box {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+<h1>LDU Factorization</h1>
+
+<div>
+    <h3>Enter the matrix size (n x n):</h3>
+    <input type="number" id="matrix-size" min="2" placeholder="Enter n">
+    <button onclick="generateMatrix()">Generate Matrix</button>
+</div>
+
+<div id="matrix-container" style="display: none;">
+    <h3>Enter the matrix values:</h3>
+    <table id="matrix-input"></table>
+    <button onclick="calculateLDU()">Calculate LDU Factorization</button>
+</div>
+
+<div id="steps-container" style="display: none;">
+    <h3>Elimination Steps (E21, E31, E32):</h3>
+    <div id="steps"></div>
+</div>
+
+<div id="results-container" style="display: none;">
+    <h3>Results:</h3>
+    <div class="box result-box">
+        <h3>Lower Triangular Matrix (L):</h3>
+        <pre id="lower-matrix"></pre>
+    </div>
+
+    <div class="box result-box">
+        <h3>Upper Triangular Matrix (U):</h3>
+        <pre id="upper-matrix"></pre>
+    </div>
+
+    <div class="box result-box">
+        <h3>Diagonal Matrix (D):</h3>
+        <pre id="diagonal-matrix"></pre>
+    </div>
+</div>
+
+<script>
+    function generateMatrix() {
+        const size = parseInt(document.getElementById('matrix-size').value);
+        if (isNaN(size) || size < 2) {
+            alert("Please enter a valid matrix size (n ≥ 2).");
+            return;
+        }
+
+        const matrixInput = document.getElementById('matrix-input');
+        matrixInput.innerHTML = '';
+        for (let i = 0; i < size; i++) {
+            let row = '<tr>';
+            for (let j = 0; j < size; j++) {
+                row += `<td><input type="number" id="cell-${i}-${j}" /></td>`;
+            }
+            row += '</tr>';
+            matrixInput.innerHTML += row;
+        }
+        document.getElementById('matrix-container').style.display = 'block';
+    }
+
+    function calculateLDU() {
+        const size = parseInt(document.getElementById('matrix-size').value);
+        let matrix = [];
+
+        for (let i = 0; i < size; i++) {
+            let row = [];
+            for (let j = 0; j < size; j++) {
+                let value = parseFloat(document.getElementById(`cell-${i}-${j}`).value);
+                if (isNaN(value)) {
+                    alert("Please fill in all matrix values.");
+                    return;
+                }
+                row.push(value);
+            }
+            matrix.push(row);
+        }
+
+        let L = Array.from({ length: size }, () => Array(size).fill(0));
+        let D = Array.from({ length: size }, () => Array(size).fill(0));
+        let U = Array.from({ length: size }, () => Array(size).fill(0));
+        const stepsContainer = document.getElementById('steps');
+        stepsContainer.innerHTML = "";
+
+        for (let i = 0; i < size; i++) {
+            L[i][i] = 1;
+            for (let j = i; j < size; j++) {
+                let sum = 0;
+                for (let k = 0; k < i; k++) {
+                    sum += L[i][k] * D[k][k] * U[k][j];
+                }
+                U[i][j] = matrix[i][j] - sum;
+            }
+            for (let j = i + 1; j < size; j++) {
+                let sum = 0;
+                for (let k = 0; k < i; k++) {
+                    sum += L[j][k] * D[k][k] * U[k][i];
+                }
+                L[j][i] = (matrix[j][i] - sum) / U[i][i];
+            }
+            for (let j = i; j < size; j++) {
+                if (j == i) {
+                    D[i][i] = U[i][j];
+                    U[i][j] = 1; // Ensure 1s on diagonal of U
+                }
+            }
+
+            const stepBox = document.createElement('div');
+            stepBox.className = 'box';
+            stepBox.innerHTML = `<h4>Step E${i + 2}${i + 1}: Eliminate row ${i + 2} using row ${i + 1}</h4>`;
+            stepBox.innerHTML += `<strong>L:</strong><br>${L.map(row => row.map(val => val.toFixed(2)).join(' ')).join('<br>')}`;
+            stepBox.innerHTML += `<br><strong>U:</strong><br>${U.map(row => row.map(val => val.toFixed(2)).join(' ')).join('<br>')}`;
+            stepsContainer.appendChild(stepBox);
+        }
+
+        document.getElementById('lower-matrix').textContent = L.map(row => row.join(' ')).join('\n');
+        document.getElementById('upper-matrix').textContent = U.map(row => row.join(' ')).join('\n');
+        document.getElementById('diagonal-matrix').textContent = D.map(row => row.join(' ')).join('\n');
+
+        document.getElementById('steps-container').style.display = 'block';
+        document.getElementById('results-container').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
